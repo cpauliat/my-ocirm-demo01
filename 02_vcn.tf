@@ -17,7 +17,7 @@ resource "oci_core_internet_gateway" "orm-demo01-ig" {
 resource "oci_core_route_table" "orm-demo01-rt" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_virtual_network.orm-demo01-vcn.id
-  display_name   = "orm-demo01-route-table"
+  display_name   = "orm-demo01-route-table2"
 
   route_rules {
     destination       = "0.0.0.0/0"
