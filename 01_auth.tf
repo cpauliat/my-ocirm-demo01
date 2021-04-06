@@ -1,17 +1,22 @@
-# ---- use variables defined in terraform.tfvars file
+# ---- variables with no default value
 variable "tenancy_ocid" {}
 variable "user_ocid" {}
-variable "region" { default = "eu-frankfurt-1" }
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "compartment_ocid" {}
-variable "AD" {}
-variable "BootStrapFile_ol7" {}
-variable "ssh_public_key_file_ol7" {}
-variable "ssh_private_key_file_ol7" {}
+variable "ssh_public_key_file" {}
+
+# ---- variables with default value in terraform.tfvars
 variable "authorized_ips" {}
+variable "region" {}
+variable "AD" {}
+variable "vcn_name" {}
+variable "vcn_dnslabel" {}
 variable "cidr_vcn" {}
 variable "cidr_subnet1" {}
+variable "name" {}
+variable "hostname" {}
+variable "shape" {}
 
 # ---- provider
 provider "oci" {

@@ -2,8 +2,8 @@
 resource oci_core_instance tf-demo01-ol7 {
   availability_domain  = data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1]["name"]
   compartment_id       = var.compartment_ocid
-  display_name         = "tf-demo01-ol7"
-  shape                = "VM.Standard.E2.1"
+  display_name         = var.name
+  shape                = var.shape
   preserve_boot_volume = "false"
 
   source_details {
@@ -13,13 +13,12 @@ resource oci_core_instance tf-demo01-ol7 {
 
   create_vnic_details {
     subnet_id      = oci_core_subnet.tf-demo01-public-subnet1.id
-    hostname_label = "tf-demo01-ol7"
-    #  private_ip    = "10.0.0.3"
+    hostname_label = var.hostname
   }
 
   metadata = {
-    ssh_authorized_keys = file(var.ssh_public_key_file_ol7)
-    user_data           = base64encode(file(var.BootStrapFile_ol7))
+    ssh_authorized_keys = var.ssh_public_key_file
+    user_data           = base64encode(file("userdata/bootstrap_ol7.sh"))
   }
 }
 
@@ -29,14 +28,14 @@ output Instance_OL7 {
 
 
   ---- You can SSH directly to the OL7 instance by typing the following ssh command
-  ssh -i ${var.ssh_private_key_file_ol7} opc@${oci_core_instance.tf-demo01-ol7.public_ip}
+  ssh -i <your-private-SSH-key-file> opc@${oci_core_instance.tf-demo01-ol7.public_ip}
 
   ---- Alternatively, you can add the following lines to your file $HOME/.ssh/config and then just run "ssh ol7"
 
   Host ol7
           Hostname ${oci_core_instance.tf-demo01-ol7.public_ip}
           User opc
-          IdentityFile ${var.ssh_private_key_file_ol7}
+          IdentityFile <your-private-SSH-key-file>
 
   
 EOF

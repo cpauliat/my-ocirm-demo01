@@ -2,8 +2,8 @@
 resource oci_core_virtual_network tf-demo01-vcn {
   cidr_block     = var.cidr_vcn
   compartment_id = var.compartment_ocid
-  display_name   = "tf-demo01-vcn"
-  dns_label      = "demo01"
+  display_name   = var.vcn_name
+  dns_label      = var.vcn_dnslabel
 }
 
 # ------ Create a new Internet Gategay
