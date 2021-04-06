@@ -33,6 +33,11 @@ variables:
     default: "orm-demo01"
     required: true
     title: "Compute instance display name"
+  instance_hostname:
+    type: string
+    default: "demo01"
+    required: true
+    title: "Compute instance hostname"
   instance_AD_name:
     type: oci:identity:availabilitydomain:name
     dependsOn:

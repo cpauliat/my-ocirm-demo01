@@ -13,7 +13,7 @@ resource "oci_core_instance" "orm-demo01-ol7" {
 
   create_vnic_details {
     subnet_id      = oci_core_subnet.orm-demo01-public-subnet1.id
-    hostname_label = "demo01"
+    hostname_label = var.instance_hostname
   }
 
   metadata = {

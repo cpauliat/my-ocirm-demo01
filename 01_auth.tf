@@ -12,6 +12,7 @@ variable "authorized_ips" {}
 # options for compute instance
 variable "instance_AD_name" {}
 variable "instance_name" {}
+variable "instance_hostname" {}
 variable "instance_shape" {}
 variable "public_ssh_key" {}
 
