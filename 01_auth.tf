@@ -1,29 +1,32 @@
-# ---- variables with no default value
-variable "tenancy_ocid" {}
-variable "user_ocid" {}
-variable "fingerprint" {}
-variable "private_key_path" {}
-variable "compartment_ocid" {}
-variable "ssh_public_key_file" {}
+# ---- variables defined by user at run time
 
-# ---- variables with default value in terraform.tfvars
-variable "authorized_ips" {}
-variable "region" {}
-variable "AD" {}
-variable "vcn_name" {}
-variable "vcn_dnslabel" {}
+# value retrieved automatically by OCI resource manager
+variable "compartment_ocid" {}
+
+# options for VCN
+variable "name_vcn" {}
 variable "cidr_vcn" {}
 variable "cidr_subnet1" {}
-variable "name" {}
-variable "hostname" {}
-variable "shape" {}
+variable "authorized_ips" {}
 
-# ---- provider
-provider "oci" {
-  region           = var.region
-  tenancy_ocid     = var.tenancy_ocid
-  user_ocid        = var.user_ocid
-  fingerprint      = var.fingerprint
-  private_key_path = var.private_key_path
-}
+# options for compute instance
+variable "instance_AD_name" {}
+variable "instance_name" {}
+variable "instance_shape" {}
+variable "public_ssh_key" {}
+
+# ---- provider (Not needed by OCI resource manager)
+#variable "region" {}
+#variable "tenancy_ocid" {}
+#variable "user_ocid" {}
+#variable "fingerprint" {}
+#variable "private_key_path" {}
+
+#provider "oci" {
+#  region           = var.region
+#  tenancy_ocid     = var.tenancy_ocid
+#  user_ocid        = var.user_ocid
+#  fingerprint      = var.fingerprint
+#  private_key_path = var.private_key_path
+#}
 

@@ -1,9 +1,9 @@
 # ------ Create a compute instance from the most recent Oracle Linux 7.x image
-resource oci_core_instance tf-demo01-ol7 {
-  availability_domain  = data.oci_identity_availability_domains.ADs.availability_domains[var.AD - 1]["name"]
+resource "oci_core_instance" "orm-demo01-ol7" {
+  availability_domain  = var.instance_AD_name
   compartment_id       = var.compartment_ocid
-  display_name         = var.name
-  shape                = var.shape
+  display_name         = var.instance_name
+  shape                = var.instance_shape
   preserve_boot_volume = "false"
 
   source_details {
@@ -12,32 +12,18 @@ resource oci_core_instance tf-demo01-ol7 {
   }
 
   create_vnic_details {
-    subnet_id      = oci_core_subnet.tf-demo01-public-subnet1.id
-    hostname_label = var.hostname
+    subnet_id      = oci_core_subnet.orm-demo01-public-subnet1.id
+    hostname_label = "demo01"
   }
 
   metadata = {
-    ssh_authorized_keys = var.ssh_public_key_file
+    ssh_authorized_keys = var.public_ssh_key
     user_data           = base64encode(file("userdata/bootstrap_ol7.sh"))
   }
 }
 
-# ------ Display the complete ssh command needed to connect to the instance
-output Instance_OL7 {
-  value = <<EOF
-
-
-  ---- You can SSH directly to the OL7 instance by typing the following ssh command
-  ssh -i <your-private-SSH-key-file> opc@${oci_core_instance.tf-demo01-ol7.public_ip}
-
-  ---- Alternatively, you can add the following lines to your file $HOME/.ssh/config and then just run "ssh ol7"
-
-  Host ol7
-          Hostname ${oci_core_instance.tf-demo01-ol7.public_ip}
-          User opc
-          IdentityFile <your-private-SSH-key-file>
-
-  
-EOF
+# ------ Display public IP address of the instance
+output "Public_IP_address" {
+  value = oci_core_instance.orm-demo01-ol7.public_ip
 }
 

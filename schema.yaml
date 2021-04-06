@@ -1,0 +1,79 @@
+title: 01_OCI_demo_vcn_OL7_instance
+description: Create a VCN with an Oracle Linux 7.x compute instance
+schemaVersion: 1.0.0
+version: "20201005"
+locale: "en"
+
+groupings:
+  - title: "VCN options"
+    variables:
+      - ${name_vcn}
+      - ${cidr_vcn}
+      - ${cidr_subnet1}
+      - ${authorized_ips}
+  - title: "Compute instance options"
+    variables:
+      - ${instance_name}
+      - ${instance_AD_name}
+      - ${instance_shape}
+      - ${public_ssh_key}
+  - title: "Pre-Defined"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${user_ocid}
+      - ${fingerprint}
+      - ${private_key_path}
+      - ${compartment_ocid}
+    visible: false
+
+variables:
+  instance_name:
+    type: string
+    default: "orm-demo01"
+    required: true
+    title: "Compute instance display name"
+  instance_AD_name:
+    type: oci:identity:availabilitydomain:name
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+    visible: complexExpression
+    required: true
+    description: "Availability Domain where compute instance will be provisioned"
+    title: "Availability Domain"
+  instance_shape:
+    type: oci:core:instanceshape:name
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+      availabilityDomainName: ${instance_AD_name}
+    required: true
+    title: "Compute instance shape"
+  public_ssh_key:
+    type: string
+    title: "Public SSH key"
+    required: true
+
+  name_vcn:
+    type: string
+    title: "Name of the VCN"
+    description: "Display name of the VCN"
+    default: "orm-demo01"
+    required: true
+  cidr_vcn:
+    type: string
+    title: "VCN CIDR block"
+    description: "VCN CIDR block"
+    default: "172.16.0.0/16"
+    required: true
+  cidr_subnet1:
+    type: string
+    title: "Public subnet CIDR block"
+    description: "Public subnet CIDR block"
+    default: "172.16.0.0/24"
+    required: true
+  authorized_ips:
+    type: string
+    title: "CIDR block for authorized public IP address(es)"
+    description: "CIDR block for public IP address(es) authorized to SSH to subnet"
+    default: "0.0.0.0/0"
+    required: true
