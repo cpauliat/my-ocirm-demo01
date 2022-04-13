@@ -1,6 +1,6 @@
 # ------ Create a new VCN
 resource oci_core_virtual_network orm-demo01-vcn {
-  cidr_block     = var.cidr_vcn
+  cidr_blocks    = [ var.cidr_vcn ]
   compartment_id = var.compartment_ocid
   display_name   = var.name_vcn
   dns_label      = "demo01"
@@ -42,6 +42,7 @@ resource oci_core_security_list orm-demo01-subnet1-sl {
     protocol = "all"
     source   = var.cidr_vcn
   }
+
   ingress_security_rules {
     protocol    = "6" # tcp
     source      = var.authorized_ips
@@ -51,6 +52,7 @@ resource oci_core_security_list orm-demo01-subnet1-sl {
       max = 22
     }
   }
+  
   ingress_security_rules {
     protocol    = "1" # icmp
     source      = var.authorized_ips

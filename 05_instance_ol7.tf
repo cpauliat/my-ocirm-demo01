@@ -1,5 +1,5 @@
 # ------ Create a compute instance from the most recent Oracle Linux 7.x image
-resource oci_core_instance orm-demo01-ol7 {
+resource "oci_core_instance" "orm-demo01-ol7" {
   availability_domain  = var.instance_AD_name
   compartment_id       = var.compartment_ocid
   display_name         = var.instance_name
@@ -23,7 +23,7 @@ resource oci_core_instance orm-demo01-ol7 {
 }
 
 # ------ Display public IP address of the instance
-output Public_IP_address {
+output "Public_IP_address" {
   value = oci_core_instance.orm-demo01-ol7.public_ip
 }
 
